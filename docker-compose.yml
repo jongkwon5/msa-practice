@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  discovery-server:
+    build: ./discovery-server
+    ports:
+      - "9010:9010"
+    networks:
+      - msa-net
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "9020:9020"
+    depends_on:
+      - discovery-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:9010/eureka
+    networks:
+      - msa-net
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "9030:9030"
+    depends_on:
+      - discovery-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:9010/eureka
+    networks:
+      - msa-net
+
+  board-service:
+    build: ./board-service
+    ports:
+      - "9040:9040"
+    depends_on:
+      - discovery-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:9010/eureka
+    networks:
+      - msa-net
+
+networks:
+  msa-net:
