@@ -9,7 +9,8 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
-      - ../:/home/msa-practice     # 프로젝트 전체를 볼륨으로 mount
+      - ../:/home/msa-practice
+      - /var/run/docker.sock:/var/run/docker.sock  # <- 추가
 
 volumes:
   jenkins_home:

@@ -1,5 +1,10 @@
-FROM jenkins/jenkins:lts-jdk17
+FROM jenkins/jenkins:lts
 
 USER root
-RUN apt-get update && apt-get install -y git
+
+# Docker CLI 설치
+RUN apt-get update && \
+    apt-get install -y docker.io && \
+    usermod -aG docker jenkins
+
 USER jenkins
