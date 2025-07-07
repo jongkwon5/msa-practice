@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardController {
     @GetMapping("/hello")
     public String hello(){
-        return "hello from Board Service~~ come on NOW~~~~~~~~~~~~~~~~!~~~~~~~~~";
+        return "이건 보드 헬로입니다.";
     }
 }
