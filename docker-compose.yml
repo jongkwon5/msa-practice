@@ -21,7 +21,7 @@ services:
       - "5001:80"
     environment:
       - REGISTRY_TITLE=Local Docker Registry
-      - REGISTRY_URL=http://registry:5000
+      - REGISTRY_URL=http://host.docker.internal:5000
     depends_on:
       - registry
     networks:
