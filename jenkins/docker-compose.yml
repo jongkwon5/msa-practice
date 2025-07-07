@@ -9,6 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - jenkins_home:/var/jenkins_home
+    user: root  # ✅ 꼭 root로 실행해야 docker.sock 권한 됨!
 
 volumes:
   jenkins_home:
