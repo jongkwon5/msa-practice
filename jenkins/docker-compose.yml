@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    ports:
+      - "28080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ../:/home/msa-practice     # 프로젝트 전체를 볼륨으로 mount
+
+volumes:
+  jenkins_home:
