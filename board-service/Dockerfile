@@ -2,6 +2,10 @@
 FROM gradle:8.5.0-jdk17 AS builder
 COPY . /app
 WORKDIR /app
+
+# ✅ 실행 권한 부여
+RUN chmod +x ./gradlew
+
 RUN ./gradlew bootJar --no-daemon
 
 # 2단계: 실행용 이미지
