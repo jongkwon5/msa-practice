@@ -5,12 +5,14 @@ USER root
 # Java 17 설치
 RUN apt-get update && apt-get install -y openjdk-17-jdk
 
-# Docker 및 docker-compose 설치
-RUN apt-get install -y docker.io curl
-RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
-  -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+# Docker Compose v2 설치 (시스템 전역 경로에 설치)
+RUN mkdir -p /usr/local/lib/docker/cli-plugins && \
+    curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 \
+    -o /usr/local/lib/docker/cli-plugins/docker-compose && \
+    chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
-# docker 그룹에 jenkins 사용자 추가
-RUN groupadd -f docker && usermod -aG docker jenkins
+# Jenkins에게 Docker 권한 부여
+RUN apt-get install -y docker.io && \
+    usermod -aG docker jenkins
 
 USER jenkins
