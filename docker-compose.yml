@@ -2,6 +2,32 @@ version: '3.8'
 
 services:
 
+  ### 👉 Docker Registry
+  registry:
+    image: registry:2
+    container_name: local-registry
+    ports:
+      - "5000:5000"
+    volumes:
+      - registry-data:/var/lib/registry
+    networks:
+      - msa-net
+
+  ### 👉 Registry Web UI (📌 pagination 문제 해결됨)
+  registry-ui:
+    image: joxit/docker-registry-ui:1.5-static
+    container_name: registry-ui
+    ports:
+      - "5001:80"
+    environment:
+      - REGISTRY_TITLE=Local Docker Registry
+      - REGISTRY_URL=http://registry:5000
+      - REGISTRY_PAGINATION=100
+    depends_on:
+      - registry
+    networks:
+      - msa-net
+
   discovery-server:
     build: ./discovery-server
     ports:
@@ -44,3 +70,6 @@ services:
 
 networks:
   msa-net:
+
+volumes:
+  registry-data:
